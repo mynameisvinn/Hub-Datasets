@@ -17,20 +17,22 @@ class Retrieve(Dataset):
     def fetch(self, url):
         return urllib.request.urlretrieve(url, self.sink)
     
+
     def unpack(self, tarfile_file_name):
         open_tarfile = tarfile.open(tarfile_file_name)
         open_tarfile.extractall(path=self.directory)
         open_tarfile.close()
         
     
-    def push(self, schema, files):
+    def push(self, schema: dict, files, url: str):
         self.schema = schema
         
         size = len(files)
         if size == 0:
             raise ValueError("Empty Directory")
+        print(">> {size} records".format(size))
         
-        ds = hub.Dataset(url, shape=(size,), schema=my_schema, mode="w")
+        ds = hub.Dataset(url, shape=(size,), schema=schema, mode="w")
         
         for i, file in tqdm(enumerate(files)):
             with open(file) as json_file:
