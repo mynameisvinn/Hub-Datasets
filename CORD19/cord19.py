@@ -1,0 +1,39 @@
+import urllib.request
+import tarfile
+import hub
+from tqdm import tqdm
+import argparse
+import json
+from glob import glob
+
+from Fast import Dataset
+    
+
+class Retrieve(Dataset):
+    def __init__(self):
+        self.sink = "sink"
+        self.directory = "unzipped"
+    
+    def fetch(self, url):
+        return urllib.request.urlretrieve(url, self.sink)
+    
+    def unpack(self, tarfile_file_name):
+        open_tarfile = tarfile.open(tarfile_file_name)
+        open_tarfile.extractall(path=self.directory)
+        open_tarfile.close()
+        
+    
+    def push(self, schema, files):
+        self.schema = schema
+        
+        size = len(files)
+        if size == 0:
+            raise ValueError("Empty Directory")
+        
+        ds = hub.Dataset(url, shape=(size,), schema=my_schema, mode="w")
+        
+        for i, file in tqdm(enumerate(files)):
+            with open(file) as json_file:
+                data = json.load(json_file)
+                ds['data', i] = data
+        ds.commit()
