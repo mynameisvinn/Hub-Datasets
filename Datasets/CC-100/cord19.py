@@ -14,6 +14,7 @@ class Retrieve(Dataset):
         self.sink = "sink"
         self.directory = "unzipped"
     
+    
     def fetch(self, url):
         return urllib.request.urlretrieve(url, self.sink)
     
