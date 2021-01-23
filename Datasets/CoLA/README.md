@@ -1,0 +1,2 @@
+# CoLA
+The Corpus of Linguistic Acceptability (CoLA) in its full form consists of 10657 sentences from 23 linguistics publications, expertly annotated for acceptability (grammaticality) by their original authors. The [public version](https://nyu-mll.github.io/CoLA/) provided here contains 9594 sentences belonging to training and development sets, and excludes 1063 sentences belonging to a held out test set. 
