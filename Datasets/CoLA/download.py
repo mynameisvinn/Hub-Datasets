@@ -29,8 +29,8 @@ class Retrieve(Dataset):
     
 
     def unpack(self):
-        with zipfile.ZipFile(self.temp, 'r') as zip_ref:
-            zip_ref.extractall()
+        with zipfile.ZipFile(self.temp, 'r') as z:
+            z.extractall()
 
         
     def push(self):
@@ -55,7 +55,8 @@ class Retrieve(Dataset):
             }
 
         ds = load_transform(data)
-        ds2 = ds.store(self.tag)
+        return ds.store(self.tag)
+
 
 
 def main(url, tag, schema):
